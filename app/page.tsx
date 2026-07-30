@@ -18,7 +18,7 @@ export default function Page() {
         <div className="space-y-4">
           <div className="inline-flex items-center space-x-2 bg-industrial-orange/10 border border-industrial-orange/20 px-3.5 py-1.5 rounded-full text-industrial-orange font-black text-xs tracking-wider uppercase font-mono">
             <MonitorCheck size={14} />
-            <span>Manufacturing Twin Pro</span>
+            <span>MANUTWIN ENTERPRISE SYSTEM</span>
           </div>
           <h1 className="text-4xl md:text-6xl font-black tracking-tight text-charcoal uppercase leading-none">
             Manutwin
@@ -45,7 +45,7 @@ export default function Page() {
                 </p>
               </div>
               <div className="border-t border-border-soft pt-4 flex items-center justify-between text-xxs font-mono text-slate-400">
-                <span>FEATURES: FR-1, FR-2, FR-3, FR-4</span>
+                <span>STATION TERMINAL ACCESS</span>
                 <span className="bg-industrial-orange/10 text-industrial-orange px-2 py-0.5 rounded-lg font-bold">TOUCH SCREEN</span>
               </div>
             </div>
@@ -66,7 +66,7 @@ export default function Page() {
                 </p>
               </div>
               <div className="border-t border-border-soft pt-4 flex items-center justify-between text-xxs font-mono text-slate-400">
-                <span>FEATURES: FR-5, FR-6, FR-7</span>
+                <span>SUPERVISOR ANALYTICS HUB</span>
                 <span className="bg-industrial-orange/10 text-industrial-orange px-2 py-0.5 rounded-lg font-bold">DESKTOP READY</span>
               </div>
             </div>
@@ -76,7 +76,7 @@ export default function Page() {
         {/* Footer info */}
         <div className="text-slate-400 font-mono text-xxs flex items-center justify-center space-x-2 pt-6">
           <Settings size={12} />
-          <span>Next.js App Router &bull; Soft Warm Cream Design System</span>
+          <span>MANUTWIN SYSTEM LAUNCHER | SECURE FACTORY NETWORK | INTERNAL USE ONLY</span>
         </div>
       </div>
     </main>

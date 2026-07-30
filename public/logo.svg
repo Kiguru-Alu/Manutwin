@@ -1,0 +1,63 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="100%" height="100%">
+  <defs>
+    <!-- Vibrant industrial orange gradient -->
+    <linearGradient id="orangeGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FF5722" />
+      <stop offset="100%" stop-color="#E64A19" />
+    </linearGradient>
+    <!-- Deep charcoal base gradient -->
+    <linearGradient id="charcoalGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#2D3748" />
+      <stop offset="100%" stop-color="#1A202C" />
+    </linearGradient>
+    <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="6" result="blur" />
+      <feComposite in="SourceGraphic" in2="blur" operator="over" />
+    </filter>
+  </defs>
+
+  <!-- Background Layer (Soft aesthetic circle to frame the twin logo) -->
+  <circle cx="256" cy="256" r="240" fill="url(#charcoalGrad)" stroke="#FF5722" stroke-width="6" stroke-opacity="0.2" />
+
+  <!-- Outer Telemetry Radar Orbit -->
+  <circle cx="256" cy="256" r="200" fill="none" stroke="#FF5722" stroke-width="2" stroke-dasharray="10 15" opacity="0.4" />
+  <circle cx="256" cy="256" r="160" fill="none" stroke="#FF5722" stroke-width="1.5" stroke-dasharray="4 8" opacity="0.3" />
+
+  <!-- Digital Twin Network Nodes / Pulse Lines (Background connections) -->
+  <path d="M 176 256 L 336 256" stroke="url(#orangeGrad)" stroke-width="4" stroke-linecap="round" opacity="0.8" />
+  <path d="M 176 256 L 256 160 L 336 256 L 256 352 Z" fill="none" stroke="#FF5722" stroke-width="3" stroke-dasharray="6 6" opacity="0.6" />
+  
+  <!-- Left Side: Physical Side represented as stylized Machine Gear -->
+  <g transform="translate(176, 256)">
+    <!-- Gear teeth -->
+    <circle cx="0" cy="0" r="48" fill="none" stroke="url(#orangeGrad)" stroke-width="12" />
+    <path d="M -6 -56 L 6 -56 L 8 -40 L -8 -40 Z" fill="url(#orangeGrad)" />
+    <path d="M -6 56 L 6 56 L 8 40 L -8 40 Z" fill="url(#orangeGrad)" transform="rotate(180)" />
+    <path d="M -6 -56 L 6 -56 L 8 -40 L -8 -40 Z" fill="url(#orangeGrad)" transform="rotate(45)" />
+    <path d="M -6 -56 L 6 -56 L 8 -40 L -8 -40 Z" fill="url(#orangeGrad)" transform="rotate(90)" />
+    <path d="M -6 -56 L 6 -56 L 8 -40 L -8 -40 Z" fill="url(#orangeGrad)" transform="rotate(135)" />
+    <path d="M -6 -56 L 6 -56 L 8 -40 L -8 -40 Z" fill="url(#orangeGrad)" transform="rotate(-45)" />
+    <path d="M -6 -56 L 6 -56 L 8 -40 L -8 -40 Z" fill="url(#orangeGrad)" transform="rotate(-90)" />
+    <path d="M -6 -56 L 6 -56 L 8 -40 L -8 -40 Z" fill="url(#orangeGrad)" transform="rotate(-135)" />
+    <!-- Gear center hole -->
+    <circle cx="0" cy="0" r="20" fill="#1A202C" stroke="#FF5722" stroke-width="3" />
+  </g>
+
+  <!-- Right Side: Digital Side represented as stylized Telemetry Dashboard / Data Node -->
+  <g transform="translate(336, 256)">
+    <!-- Shield Outline -->
+    <path d="M -48 -40 L 48 -40 L 48 10 C 48 36 0 54 0 54 C 0 54 -48 36 -48 10 Z" fill="none" stroke="#FFFFFF" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" />
+    <!-- Pulse Wave trace inside the digital shield -->
+    <path d="M -30 10 L -15 10 L -8 -15 L 2 25 L 12 -5 L 20 10 L 30 10" fill="none" stroke="url(#orangeGrad)" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" filter="url(#glow)" />
+  </g>
+
+  <!-- Telemetry Sync Nodes (Top and Bottom pulsing dots) -->
+  <circle cx="256" cy="160" r="10" fill="#FFFFFF" stroke="#FF5722" stroke-width="4" />
+  <circle cx="256" cy="352" r="10" fill="#FFFFFF" stroke="#FF5722" stroke-width="4" />
+
+  <!-- Connector Rays showing twin reflection -->
+  <line x1="256" y1="160" x2="176" y2="256" stroke="#FFFFFF" stroke-width="2" opacity="0.5" />
+  <line x1="256" y1="160" x2="336" y2="256" stroke="#FFFFFF" stroke-width="2" opacity="0.5" />
+  <line x1="256" y1="352" x2="176" y2="256" stroke="#FFFFFF" stroke-width="2" opacity="0.5" />
+  <line x1="256" y1="352" x2="336" y2="256" stroke="#FFFFFF" stroke-width="2" opacity="0.5" />
+</svg>

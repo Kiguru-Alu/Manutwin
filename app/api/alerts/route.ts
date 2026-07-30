@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server';
 import { getDb, saveDb } from '../../../lib/db';
 import { AccountAlert } from '../../../lib/types';
 import { formatSMSAlertMessage } from '../../../lib/alert-service';
+import { checkAndTriggerBackendAlerts } from '../../../lib/backend-alerts';
 
 /**
  * Handles FR-6: SMS Alert Dispatch API route.
@@ -9,6 +10,7 @@ import { formatSMSAlertMessage } from '../../../lib/alert-service';
  */
 
 export async function GET() {
+  await checkAndTriggerBackendAlerts();
   const db = getDb();
   return NextResponse.json(db.alerts);
 }

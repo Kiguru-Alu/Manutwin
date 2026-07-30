@@ -4,7 +4,7 @@ import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { Station, MachineHalt, AccountAlert } from '../../../lib/types';
 import { generateWeeklyPDFReport } from '../../../lib/pdf-generator';
-import { ArrowLeft, FileText, Download, Calendar, MailWarning } from 'lucide-react';
+import { ArrowLeft, FileText, Download, Calendar, MailWarning, Lock } from 'lucide-react';
 
 /**
  * Handles FR-7: Supervisor Reports Center.
@@ -66,6 +66,21 @@ export default function SupervisorReportsPage() {
               Weekly PDF Compiler & Audit Logs
             </span>
           </div>
+        </div>
+
+        <div className="flex items-center space-x-3">
+          {/* Lock Portal button */}
+          <button
+            onClick={() => {
+              sessionStorage.removeItem('manutwin_supervisor_user');
+              window.location.reload();
+            }}
+            className="px-3.5 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 border border-slate-700 text-xs font-black uppercase tracking-wider flex items-center space-x-1.5 text-rose-400 hover:text-rose-300 cursor-pointer"
+            title="Lock Portal"
+          >
+            <Lock size={14} />
+            <span className="hidden sm:inline">Lock Portal</span>
+          </button>
         </div>
       </header>
 

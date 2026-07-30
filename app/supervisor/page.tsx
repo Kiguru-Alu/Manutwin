@@ -4,12 +4,11 @@ import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { Station, MachineHalt, ProductionLog } from '../../lib/types';
 import { calculateLineSpeed } from '../../lib/speed-calculator';
-import { evaluateHaltAlerts } from '../../lib/alert-service';
 import SpeedChart from '../../components/supervisor/SpeedChart';
 import DowntimeSummary from '../../components/supervisor/DowntimeSummary';
 import PDFExportButton from '../../components/supervisor/PDFExportButton';
 import AlertBanner from '../../components/shared/AlertBanner';
-import { ArrowLeft, RefreshCw, AlertCircle, FileText } from 'lucide-react';
+import { ArrowLeft, RefreshCw, AlertCircle, FileText, Lock } from 'lucide-react';
 
 /**
  * Handles FR-5, FR-6, FR-7: Supervisor Dashboard.
@@ -49,54 +48,43 @@ export default function SupervisorDashboard() {
     return () => clearInterval(interval);
   }, []);
 
-  // 10-Minute halt checker (FR-6)
+  // 10-Minute halt checker (FR-6) - Synchronize banners from backend alerts
   useEffect(() => {
     if (halts.length === 0 || stations.length === 0) return;
 
-    const alertCallback = async (halt: MachineHalt): Promise<boolean> => {
+    // Filter to active ongoing halts where the backend has sent an SMS alert
+    const activeAlertedHalts = halts.filter(h => h.endTime === null && h.smsSent);
+
+    activeAlertedHalts.forEach(halt => {
       const station = stations.find(s => s.id === halt.stationId);
       const stationName = station ? station.name : 'Unknown Line';
       const durationMin = (Date.now() - halt.startTime) / 60000;
+      const bannerId = `banner-${halt.id}`;
 
-      try {
-        const response = await fetch('/api/alerts', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            haltId: halt.id,
-            stationName,
-            durationMinutes: durationMin,
-          }),
-        });
+      setBanners(prev => {
+        // If the banner is already displayed, don't duplicate it
+        if (prev.some(b => b.id === bannerId)) return prev;
 
-        if (response.ok) {
-          setBanners(prev => [
-            ...prev,
-            {
-              id: `banner-${halt.id}`,
-              message: `[SMS DISPATCHED] Plant Manager alerted. ${stationName} is halted for ${durationMin.toFixed(0)} continuous minutes.`,
-              type: 'critical',
-            },
-          ]);
+        return [
+          ...prev,
+          {
+            id: bannerId,
+            message: `[SMS DISPATCHED] Plant Manager alerted. ${stationName} has been halted for ${durationMin.toFixed(0)} continuous minutes.`,
+            type: 'critical',
+          },
+        ];
+      });
+    });
 
-          await fetch('/api/halts', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-              ...halt,
-              smsSent: true,
-            }),
-          });
-
-          return true;
-        }
-      } catch (err) {
-        console.error('Failed to trigger SMS alerts pipeline:', err);
+    // Remove banners for halts that have been resolved
+    setBanners(prev => prev.filter(b => {
+      if (b.id.startsWith('banner-')) {
+        const haltId = b.id.replace('banner-', '');
+        const halt = halts.find(h => h.id === haltId);
+        return halt ? halt.endTime === null : false;
       }
-      return false;
-    };
-
-    evaluateHaltAlerts(halts, alertCallback);
+      return true; // Keep other banners like speed drop alerts
+    }));
   }, [halts, stations]);
 
   // Speed drop warning checker (FR-5)
@@ -156,6 +144,19 @@ export default function SupervisorDashboard() {
         </div>
 
         <div className="flex items-center space-x-3">
+          {/* Lock Portal button */}
+          <button
+            onClick={() => {
+              sessionStorage.removeItem('manutwin_supervisor_user');
+              window.location.reload();
+            }}
+            className="px-3.5 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 border border-slate-700 text-xs font-black uppercase tracking-wider flex items-center space-x-1.5 text-rose-400 hover:text-rose-300 cursor-pointer"
+            title="Lock Portal"
+          >
+            <Lock size={14} />
+            <span className="hidden sm:inline">Lock Portal</span>
+          </button>
+
           {/* Reports Navigation Shortcut */}
           <Link href="/supervisor/reports" className="px-3.5 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 border border-slate-700 text-xs font-black uppercase tracking-wider flex items-center space-x-1.5 text-slate-200">
             <FileText size={14} />

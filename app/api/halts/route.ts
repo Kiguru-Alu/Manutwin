@@ -1,12 +1,14 @@
 import { NextResponse } from 'next/server';
 import { getDb, saveDb } from '../../../lib/db';
 import { MachineHalt } from '../../../lib/types';
+import { checkAndTriggerBackendAlerts } from '../../../lib/backend-alerts';
 
 /**
  * Handles FR-2, FR-3: API endpoints for retrieving and recording machine halts.
  */
 
 export async function GET() {
+  await checkAndTriggerBackendAlerts();
   const db = getDb();
   return NextResponse.json(db.halts);
 }
@@ -33,6 +35,10 @@ export async function POST(request: Request) {
     }
 
     saveDb(db);
+    
+    // Check alerts immediately on a new halt event or update
+    await checkAndTriggerBackendAlerts();
+    
     return NextResponse.json({ success: true, halt: payload });
   } catch (error) {
     console.error('API halts POST error:', error);
