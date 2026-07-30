@@ -1,0 +1,9 @@
+# Node dependencies
+node_modules/
+.next/
+out/
+
+# Environment and local stores
+.env*.local
+data/db.json
+
