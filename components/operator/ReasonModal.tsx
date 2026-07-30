@@ -54,7 +54,7 @@ export default function ReasonModal({ isOpen, onSelectReason, onClose, lang }: R
             {translate(lang, 'select_reason')}
           </h2>
           <p className="text-slate-500 text-xs mt-1">
-            Standard operating procedure requires selecting a reason code (FR-3).
+            Standard operating procedure requires selecting a reason code .
           </p>
         </div>
 

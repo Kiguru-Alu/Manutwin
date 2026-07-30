@@ -60,7 +60,7 @@ export default function DowntimeSummary({ halts, stations }: DowntimeSummaryProp
       <div className="lg:col-span-2 bg-white border border-border-soft p-6 rounded-2xl space-y-4 shadow-sm text-charcoal">
         <div>
           <h3 className="font-black text-charcoal text-base uppercase tracking-wide">Downtime Grouped by Reason</h3>
-          <p className="text-slate-500 text-xs mt-0.5">Total cumulative minutes and count since startup (FR-3)</p>
+          <p className="text-slate-500 text-xs mt-0.5">Total cumulative minutes and count since startup </p>
         </div>
         
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -97,7 +97,7 @@ export default function DowntimeSummary({ halts, stations }: DowntimeSummaryProp
             <span className="h-2.5 w-2.5 bg-industrial-orange rounded-full animate-ping"></span>
             <span>Active Stoppages</span>
           </h3>
-          <p className="text-slate-500 text-xs mt-0.5">Current lines experiencing halt conditions (FR-2, FR-6)</p>
+          <p className="text-slate-500 text-xs mt-0.5">Current lines experiencing halt conditions</p>
         </div>
 
         <div className="space-y-3 max-h-[220px] overflow-y-auto mt-4 pr-1 flex-1">

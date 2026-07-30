@@ -91,7 +91,7 @@ export default function SupervisorReportsPage() {
         <section className="space-y-4">
           <div>
             <h2 className="font-black text-charcoal text-base uppercase tracking-wide">Weekly Downtime Reports Compiler</h2>
-            <p className="text-slate-500 text-xs">Generate Friday 17:00 CAT reports grouped by downtime reason codes (FR-7)</p>
+            <p className="text-slate-500 text-xs">Generate Friday 17:00 CAT reports grouped by downtime reason codes</p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
@@ -131,7 +131,7 @@ export default function SupervisorReportsPage() {
         <section className="space-y-4">
           <div>
             <h2 className="font-black text-charcoal text-base uppercase tracking-wide">SMS Gateway Dispatch Audit</h2>
-            <p className="text-slate-500 text-xs">Audit log record of 10-minute continuous machine halt alert triggers (FR-6)</p>
+            <p className="text-slate-500 text-xs">Audit log record of 10-minute continuous machine halt alert triggers</p>
           </div>
 
           <div className="bg-white border border-border-soft rounded-2xl overflow-hidden shadow-sm">
