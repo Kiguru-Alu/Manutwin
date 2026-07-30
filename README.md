@@ -61,7 +61,7 @@ node -v
 ### Installation
 
 1. Clone the repository:
-git clone <YOUR_PUBLIC_GITHUB_REPO_URL>
+git clone https://github.com/Kiguru-Alu/Manutwin
 
 2. Navigate into the project directory:
 cd Manutwin
