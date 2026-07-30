@@ -3,8 +3,9 @@ import path from 'path';
 import { MachineHalt, ProductionLog, Station, User, AccountAlert } from './types';
 
 /**
- * Server-side local JSON file database for the Manutwin prototype.
- * Provides persistence for halts, logs, alerts, stations, and users.
+ * Server-side database wrapper for the Manutwin prototype.
+ * Provides file-system persistence locally with a graceful in-memory
+ * fallback for serverless environments (e.g., Vercel read-only filesystem).
  */
 
 const DB_DIR = path.join(process.cwd(), 'data');
@@ -35,10 +36,17 @@ const DEFAULT_DB: DatabaseSchema = {
   alerts: []
 };
 
+// In-memory cache fallback for serverless runtimes (Vercel)
+let memoryDb: DatabaseSchema | null = null;
+
 /**
- * Initializes and reads the JSON file database.
+ * Reads the database state, falling back gracefully if running in serverless environments.
  */
 export function getDb(): DatabaseSchema {
+  if (memoryDb) {
+    return memoryDb;
+  }
+
   try {
     if (!fs.existsSync(DB_DIR)) {
       fs.mkdirSync(DB_DIR, { recursive: true });
@@ -46,28 +54,31 @@ export function getDb(): DatabaseSchema {
     
     if (!fs.existsSync(DB_FILE)) {
       fs.writeFileSync(DB_FILE, JSON.stringify(DEFAULT_DB, null, 2), 'utf-8');
+      memoryDb = DEFAULT_DB;
       return DEFAULT_DB;
     }
 
     const data = fs.readFileSync(DB_FILE, 'utf-8');
-    return JSON.parse(data);
+    memoryDb = JSON.parse(data);
+    return memoryDb!;
   } catch (error) {
-    console.error('Failed to read local DB:', error);
-    return DEFAULT_DB;
+    // Falls back gracefully on Vercel read-only environments
+    memoryDb = memoryDb || JSON.parse(JSON.stringify(DEFAULT_DB));
+    return memoryDb!;
   }
 }
 
 /**
- * Saves database state back to the local JSON file.
- * @param db - The database state to write.
+ * Saves database state to disk locally, and updates in-memory cache for serverless runtimes.
  */
 export function saveDb(db: DatabaseSchema): void {
+  memoryDb = db;
   try {
     if (!fs.existsSync(DB_DIR)) {
       fs.mkdirSync(DB_DIR, { recursive: true });
     }
     fs.writeFileSync(DB_FILE, JSON.stringify(db, null, 2), 'utf-8');
   } catch (error) {
-    console.error('Failed to save local DB:', error);
+    // Disk write skipped on Vercel read-only filesystem; memoryDb holds the state
   }
 }
