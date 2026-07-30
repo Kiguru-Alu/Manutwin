@@ -90,7 +90,7 @@ Open http://localhost:3000 to view the station launcher portal.
 
 The live production instance is deployed on Vercel and accessible publicly across web browsers and mobile devices.
 
-Public URL: <YOUR_VERCEL_DEPLOYMENT_URL>
+Public URL: https://manutwin.vercel.app/
 
 ---
 
